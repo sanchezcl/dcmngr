@@ -40,7 +40,7 @@ to quickly create a Cobra application.`,
 		if len(args) <= 0 {
 			args = viper.GetStringSlice("up_default_containers")
 			fmt.Printf(
-				"Building defaults from yml: %s%s%s\n",
+				"Starting default containers from yml: %s%s%s\n",
 				support.ColorGreen,
 				strings.Join(args, ","),
 				support.ColorReset)

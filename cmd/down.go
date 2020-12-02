@@ -30,7 +30,7 @@ var downCmd = &cobra.Command{
 	Long: `Stops containers and removes containers, networks, volumes, and images
 created by 'up'.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print("Init Shutdown ...")
+		fmt.Print("Shutting down ...")
 
 		c := exec.Command("docker-compose", "down")
 		_ , err := c.CombinedOutput()

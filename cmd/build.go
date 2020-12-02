@@ -35,7 +35,7 @@ var buildCmd = &cobra.Command{
 		if len(args) <= 0 {
 			args = viper.GetStringSlice("build_default_containers")
 			fmt.Printf(
-				"Building defaults from yml: %s%s%s\n",
+				"Building default containers from yml: %s%s%s\n",
 				support.ColorGreen,
 				strings.Join(args, ","),
 				support.ColorReset)

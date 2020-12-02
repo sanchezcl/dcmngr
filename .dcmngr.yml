@@ -1,9 +1,0 @@
-bash_default_container_name: go_container
-
-build_default_containers:
-  - golang
-  - mongo
-  - redis
-up_default_containers:
-  - golang
-  - mongo
