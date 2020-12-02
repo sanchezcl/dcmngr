@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/sanchezcl/dcmngr/support"
 	"github.com/spf13/cobra"
 	"log"
 	"os/exec"
@@ -34,10 +35,11 @@ created by 'up'.`,
 		c := exec.Command("docker-compose", "down")
 		_ , err := c.CombinedOutput()
 		if err != nil {
+			fmt.Printf("%sFail%s\n", support.ColorRed, support.ColorReset)
 			log.Fatalf("cmd.Run() failed with %s\n", err)
 		}
 
-		fmt.Println("\033[32m"+" Done"+"\033[0m")
+		fmt.Printf("%sDone%s\n", support.ColorGreen, support.ColorReset)
 	},
 }
 
