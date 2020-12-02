@@ -4,3 +4,6 @@ build_default_containers:
   - golang
   - mongo
   - redis
+up_default_containers:
+  - golang
+  - mongo
