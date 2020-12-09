@@ -23,6 +23,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+const ConfigFileName string = ".dcmngr.yml"
+
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands

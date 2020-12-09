@@ -38,10 +38,8 @@ var genymlCmd = &cobra.Command{
 	Long:  `Generate .dcmngr.yml file to set the defaults containers for up, build and shell commands
 based on existent docker-compose.yml in your project`,
 	Run: func(cmd *cobra.Command, args []string) {
-		const ymlName string = ".dcmngr.yml"
-		fmt.Println()
-		if _, err := os.Stat(".dcmngr.yml"); err == nil {
-			if !support.AskForConfirmation(".dcmngr.yml already exists overwrite?") {
+		if support.FileExist(ConfigFileName) {
+			if !support.AskForConfirmation(fmt.Sprintf("%s already exists overwrite?", ConfigFileName)) {
 				fmt.Println("bye!")
 				return
 			}
@@ -62,11 +60,11 @@ based on existent docker-compose.yml in your project`,
 		if err != nil {
 			fmt.Errorf("Error marshaling yml %s", err)
 		}
-		err = ioutil.WriteFile(ymlName, ymlExportBytes, 0644)
-		fmt.Printf("\n%s%s%s created.\n\n", support.ColorGreen, ymlName, support.ColorReset)
+		err = ioutil.WriteFile(ConfigFileName, ymlExportBytes, 0644)
+		fmt.Printf("\n%s%s%s created.\n\n", support.ColorGreen, ConfigFileName, support.ColorReset)
 		fmt.Println("Your docker-compose.yml was parsed and all the services")
 		fmt.Println("included in as default containers to up and build. You")
-		fmt.Printf("can change this list in the %s\n", ymlName)
+		fmt.Printf("can change this list in the %s\n", ConfigFileName)
 	},
 }
 
