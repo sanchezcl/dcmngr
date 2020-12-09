@@ -28,7 +28,7 @@ import (
 
 // upCmd represents the up command
 var upCmd = &cobra.Command{
-	Use:   "up",
+	Use:   "up [SERVICE...]",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:

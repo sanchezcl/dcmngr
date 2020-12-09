@@ -16,32 +16,18 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
-	"github.com/sanchezcl/dcmngr/support"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"os"
 	"os/exec"
-	"strings"
-	"time"
 )
 
-// buildCmd represents the build command
-var buildCmd = &cobra.Command{
-	Use:   "build [SERVICE...]",
-	Short: "Build or rebuild services",
-	Long:  `Build or rebuild services`,
+// stopCmd represents the stop command
+var stopCmd = &cobra.Command{
+	Use:   "stop [SERVICE...]",
+	Short: "Stop running containers without removing them.",
+	Long: `Stop running containers without removing them.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) <= 0 {
-			args = viper.GetStringSlice("build_default_containers")
-			fmt.Printf(
-				"Building default containers from yml: %s%s%s\n",
-				support.ColorGreen,
-				strings.Join(args, ","),
-				support.ColorReset)
-			time.Sleep(500*time.Millisecond)
-		}
-		args = append([]string{"build"}, args...)
+		args = append([]string{"stop"}, args...)
 		c := exec.Command("docker-compose", args...)
 		c.Stdout = os.Stdout
 		c.Stderr = os.Stderr
@@ -50,15 +36,15 @@ var buildCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(buildCmd)
+	rootCmd.AddCommand(stopCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// buildCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// stopCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	//buildCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// stopCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

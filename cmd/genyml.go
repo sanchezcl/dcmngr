@@ -38,6 +38,7 @@ var genymlCmd = &cobra.Command{
 	Long:  `Generate .dcmngr.yml file to set the defaults containers for up, build and shell commands
 based on existent docker-compose.yml in your project`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println()
 		if support.FileExist(ConfigFileName) {
 			if !support.AskForConfirmation(fmt.Sprintf("%s already exists overwrite?", ConfigFileName)) {
 				fmt.Println("bye!")
