@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/sanchezcl/dcmngr/models"
 	"github.com/sanchezcl/dcmngr/support"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
@@ -25,17 +26,11 @@ import (
 	"os"
 )
 
-type dcmngrYaml struct {
-	BashDefaultContainerName string   `yaml:"bash_default_container_name"`
-	BuildDefaultContainers   []string `yaml:"build_default_containers"`
-	UpDefaultContainers      []string `yaml:"up_default_containers"`
-}
-
 // genymlCmd represents the genyml command
 var genymlCmd = &cobra.Command{
 	Use:   "genyml",
 	Short: "Generate .dcmngr.yml file",
-	Long:  `Generate .dcmngr.yml file to set the defaults containers for up, build and shell commands
+	Long: `Generate .dcmngr.yml file to set the defaults containers for up, build and shell commands
 based on existent docker-compose.yml in your project`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println()
@@ -52,10 +47,16 @@ based on existent docker-compose.yml in your project`,
 		}
 
 		containerNames = extractContainerNamesFromYml()
-		ymlExport := dcmngrYaml{
-			BashDefaultContainerName: "",
-			BuildDefaultContainers:   containerNames,
-			UpDefaultContainers:      containerNames,
+		ymlExport := models.DcmngrYaml{
+			ShDefaultContainerName: "",
+			ShAlwaysAdmin: true,
+			BuildDefaultContainers: containerNames,
+			UpDefaultContainers:    containerNames,
+			WatchConfigs: models.WatchConfigs{
+				Service: "",
+				Command: "",
+				Args:    []string{""},
+			},
 		}
 		ymlExportBytes, err := yaml.Marshal(&ymlExport)
 		if err != nil {
