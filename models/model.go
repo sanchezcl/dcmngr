@@ -7,7 +7,7 @@ type WatchConfigs struct {
 }
 
 type DcmngrYaml struct {
-	ShDefaultContainerName string       `yaml:"sh_default_container_name" mapstructure:"sh_default_container_name"`
+	ShDefaultService       string       `yaml:"sh_default_service" mapstructure:"sh_default_service"`
 	ShAlwaysAdmin          bool         `yaml:"sh_always_admin" mapstructure:"sh_always_admin"`
 	BuildDefaultContainers []string     `yaml:"build_default_containers" mapstructure:"build_default_containers"`
 	UpDefaultContainers    []string     `yaml:"up_default_containers" mapstructure:"up_default_containers"`

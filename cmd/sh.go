@@ -39,16 +39,16 @@ var (
 				return
 			}
 
-			defaultShContainerName := viper.GetString("sh_default_container_name")
+			defaultShContainerName := viper.GetString("sh_default_service")
 			alwaysAdmin := viper.GetBool("sh_always_admin")
 
-			args = []string{"exec", "-it"}
+			args = []string{"exec"}
 			if !(isAdmin || alwaysAdmin) {
 				args = append(args, "-u 1000")
 			}
 			args = append(args, []string{defaultShContainerName, "bash"}...)
 
-			c := exec.Command("docker", args...)
+			c := exec.Command("docker-compose", args...)
 			c.Stdout = os.Stdout
 			c.Stderr = os.Stderr
 			c.Stdin = os.Stdin

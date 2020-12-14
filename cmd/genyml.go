@@ -48,14 +48,14 @@ based on existent docker-compose.yml in your project`,
 
 		containerNames = extractContainerNamesFromYml()
 		ymlExport := models.DcmngrYaml{
-			ShDefaultContainerName: "",
-			ShAlwaysAdmin: true,
+			ShDefaultService:       "",
+			ShAlwaysAdmin:          true,
 			BuildDefaultContainers: containerNames,
 			UpDefaultContainers:    containerNames,
 			WatchConfigs: models.WatchConfigs{
 				Service: "",
 				Command: "",
-				Args:    []string{""},
+				Args:    []string{},
 			},
 		}
 		ymlExportBytes, err := yaml.Marshal(&ymlExport)
