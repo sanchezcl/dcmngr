@@ -22,15 +22,17 @@ import (
 	"github.com/spf13/viper"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 // shCmd represents the sh command
 var (
 	isAdmin bool
 	shCmd   = &cobra.Command{
-		Use:   "sh [container name]",
+		Use:   "sh [service name]",
 		Short: "Get a shell inside a container.",
 		Long:  `Get a shell inside a container.`,
+		Args: cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if !support.FileExist(ConfigFileName) {
 				fmt.Println("yaml config file doesn't exist, please create one with:")
@@ -39,14 +41,21 @@ var (
 				return
 			}
 
-			defaultShContainerName := viper.GetString("sh_default_service")
+			if len(args) <= 0 {
+				defaultContainer := viper.GetString("sh_default_service")
+				if strings.Trim(defaultContainer, " ") == "" {
+					support.PrintError("sh_default_service not configured in .dcmgr.yaml")
+					return
+				}
+				args = append(args, viper.GetString("sh_default_service"))
+			}
 			alwaysAdmin := viper.GetBool("sh_always_admin")
 
-			args = []string{"exec"}
+			args = append([]string{"exec"}, args...)
 			if !(isAdmin || alwaysAdmin) {
 				args = append(args, "-u 1000")
 			}
-			args = append(args, []string{defaultShContainerName, "bash"}...)
+			args = append(args, "bash")
 
 			c := exec.Command("docker-compose", args...)
 			c.Stdout = os.Stdout
