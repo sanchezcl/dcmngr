@@ -31,7 +31,11 @@ var (
 	shCmd   = &cobra.Command{
 		Use:   "sh [service name]",
 		Short: "Get a shell inside a container.",
-		Long:  `Get a shell inside a container.`,
+		Long:  `Get a shell inside a container.
+
+Examples:
+dcmngr sh : 		get shell in the default container configured in .dcmngr.yml
+dcmngr sh redis: 	get shell in the redis service`,
 		Args: cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if !support.FileExist(ConfigFileName) {

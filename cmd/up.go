@@ -29,13 +29,10 @@ import (
 // upCmd represents the up command
 var upCmd = &cobra.Command{
 	Use:   "up [SERVICE...]",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Create and start containers",
+	Long: `Builds, (re)creates, starts, and attaches to containers for a service
+Unless they are already running, this command also starts any linked services.
+If it's ran without arguments starts the defaults configured in the yaml`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) <= 0 {
 			args = viper.GetStringSlice("up_default_containers")
