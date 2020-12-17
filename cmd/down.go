@@ -27,7 +27,7 @@ import (
 var downCmd = &cobra.Command{
 	Use:   "down",
 	Short: "Stop and remove containers, networks, images, and volumes",
-	Long: `Stops containers and removes containers, networks, volumes, and images
+	Long: `Stop and remove containers, networks, images, and volumes
 created by 'up'.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print("Shutting down ...")

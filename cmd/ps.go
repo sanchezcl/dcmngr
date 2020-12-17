@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/sanchezcl/dcmngr/support"
 	"os/exec"
 
 	"github.com/spf13/cobra"
@@ -30,7 +31,7 @@ var psCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		out, err := exec.Command("docker-compose", "ps", "-a").Output()
 		if err != nil {
-			fmt.Errorf("error trying to run %s", "docker-compose ps")
+			support.PrintError(fmt.Sprintf("error trying to run %s", "docker-compose ps"))
 		}
 		fmt.Println(string(out))
 	},

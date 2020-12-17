@@ -23,26 +23,25 @@ import (
 	"github.com/spf13/viper"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 // watchCmd represents the watch command
 var watchCmd = &cobra.Command{
 	Use:   "watch",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Runs live reload/build",
+	Long: `Runs live reload/build if is properly configured un the yaml file`,
 	Run: func(cmd *cobra.Command, args []string) {
 		//check if parameter is set and vaild in the yml | not error
 		var settings models.DcmngrYaml
 		viper.Unmarshal(&settings)
 		wc := &settings.WatchConfigs
-		if wc.Command == "" || wc.Service == "" {
-			fmt.Printf("Can't execute watch command missing configs in %s\n", ConfigFileName)
-			fmt.Println("please complete the configs to use this feature...")
+		if strings.Trim(wc.Command, " ") == "" || strings.Trim(wc.Service, " ") == "" {
+			support.PrintError(
+				fmt.Sprintf(
+					"Can't execute watch command missing or bad configs in %s\n" +
+						"please complete the configs to use this feature...\n",
+					ConfigFileName))
 			return
 		}
 
