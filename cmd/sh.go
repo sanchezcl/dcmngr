@@ -45,23 +45,27 @@ dcmngr sh redis: 	get shell in the redis service`,
 				return
 			}
 
+			alwaysAdmin := viper.GetBool("sh_always_admin")
+
+			commandArgs := []string{"exec"}
+			if !(isAdmin || alwaysAdmin) {
+				commandArgs = append(commandArgs, "-u", "1000")
+			}
+
 			if len(args) <= 0 {
-				defaultContainer := viper.GetString("sh_default_service")
-				if strings.Trim(defaultContainer, " ") == "" {
+				defaultContainer := strings.Trim(viper.GetString("sh_default_service"), " ")
+				if defaultContainer == "" {
 					support.PrintError("sh_default_service not configured in .dcmgr.yaml")
 					return
 				}
-				args = append(args, viper.GetString("sh_default_service"))
+				commandArgs = append(commandArgs, defaultContainer)
+			} else {
+				commandArgs = append(commandArgs, args...)
 			}
-			alwaysAdmin := viper.GetBool("sh_always_admin")
 
-			args = append([]string{"exec"}, args...)
-			if !(isAdmin || alwaysAdmin) {
-				args = append(args, "-u 1000")
-			}
-			args = append(args, "bash")
+			commandArgs = append(commandArgs, "bash")
 
-			c := exec.Command("docker-compose", args...)
+			c := exec.Command("docker-compose", commandArgs...)
 			c.Stdout = os.Stdout
 			c.Stderr = os.Stderr
 			c.Stdin = os.Stdin
