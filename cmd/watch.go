@@ -52,7 +52,8 @@ var watchCmd = &cobra.Command{
 		c.Stdout = os.Stdout
 		c.Stderr = os.Stderr
 		c.Stdin = os.Stdin
-		fmt.Printf("...I pledge my life and honor to the Night's Watch, for this night and all the nights to come.")
+		fmt.Println("...I pledge my life and honor to the Night's Watch, for this night and all the nights to come.")
+		support.PrintSword()
 		c.Run()
 		fmt.Printf("And Now His Watch Is %sEnded%s...\n", support.ColorGreen, support.ColorReset)
 	},
